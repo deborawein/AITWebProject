@@ -2,14 +2,23 @@ import { useState, useEffect } from 'react'
 import './App.css';
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+
 import { Routes, Route } from 'react-router-dom';
+
 // import page components
 import { Home } from './pages/Home'
-import { Contact } from './pages/Contact'
-import { About } from './pages/About'
+// import { Contact } from './pages/Contact'
+// import { About } from './pages/About'
 import { Signup } from './pages/Signup'
 import { Signout } from './pages/Signout'
 import { Signin } from './pages/Signin'
+
+//updates DW
+import {Experiences} from './pages/Experiences'
+import {Deals} from './pages/Deals'
+import {Cinema} from './pages/Cinema'
+import {Cart} from './pages/Cart'
+
 
 // import firebase
 import { initializeApp } from "firebase/app"
@@ -67,24 +76,43 @@ const signoutuser = () => {
 
 }
 
-const NavData = [
+// const NavData = [
+//   { name: "Home", path: "/", public: true },
+//   { name: "About", path: "/about", public: true },
+//   { name: "Contact", path: "/contact", public: true },
+//   { name: "Sign Up", path: "/signup", public: true },
+//   { name: "Sign in", path: "/signin", public: true }
+// ]
+
+const LeftNavData = [
   { name: "Home", path: "/", public: true },
-  { name: "About", path: "/about", public: true },
-  { name: "Contact", path: "/contact", public: true },
-  { name: "Sign Up", path: "/signup", public: true },
-  { name: "Sign in", path: "/signin", public: true }
+  { name: "Experiences", path: "/experiences", public: true },
+  { name: "Deals", path: "/deals", public: true }
 ]
 
-const NavDataAuth = [
-  { name: "Home", path: "/", public: true },
-  { name: "About", path: "/about", public: true },
-  { name: "Contact", path: "/contact", public: true },
-  { name: "Sign out", path: "/signout", public: true }
+const RightNavData = [
+  { name: "Cinema", path: "/cinema", icon: "fa-solid fa-map-location-dot", public: true },
+  { name: "Cart", path: "/cart", icon: "fa-solid fa-cart-shopping", public: true },
+  { name: "Account", path: "/signin", icon: "fa-solid fa-user", public: true }
+]
+
+// const NavDataAuth = [
+//   { name: "Home", path: "/", public: true },
+//   { name: "About", path: "/about", public: true },
+//   { name: "Contact", path: "/contact", public: true },
+//   { name: "Sign out", path: "/signout", public: true }
+// ]
+
+const RightNavDataAuth = [
+  { name: "Cinema", path: "/cinema", icon: "fa-solid fa-map-location-dot", public: true },
+  { name: "Cart", path: "/cart", icon: "fa-solid fa-cart-shopping", public: true },
+  { name: "SignOut", path: "/signout", icon: "fa-solid fa-user", public: true }
 ]
 
 function App() {
   const [auth, setAuth] = useState()
-  const [nav, setNav] = useState(NavData)
+  // const [nav, setNav] = useState(NavData)
+  const [rightnav, setRightNav] = useState(RightNavData)
   const [ data, setData ] = useState([])
 
   useEffect( () => {
@@ -98,14 +126,18 @@ function App() {
     if (user) {
       // visitor is authenticated
       // console.log(user)
+      // setAuth(user)
+      // setNav(NavDataAuth)
       setAuth(user)
-      setNav(NavDataAuth)
+      setRightNav(RightNavDataAuth)
     }
     else {
       // if user is null means visitor is not authenticated
       // console.log('not signed in')
+      // setAuth(null)
+      // setNav(NavData)
       setAuth(null)
-      setNav(NavData)
+      setRightNav(RightNavData)
     }
   })
 
@@ -124,20 +156,40 @@ function App() {
 
   
 
-  return (
-    <div className="App">
-      <Header title="My app" headernav={nav} />
-      <Routes>
-        <Route path="/" element={<Home listData={ data } />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/signup" element={<Signup handler={signup} />} />
-        <Route path="/signout" element={<Signout handler={signoutuser} auth={auth} />} />
-        <Route path="/signin" element={<Signin handler={signin} />} />
-      </Routes>
-      <Footer year="2022" />
-    </div>
-  );
+//   return (
+//     <div className="App">
+//       <Header title="BRAND" headernav={nav} />
+//       <Routes>
+//         <Route path="/" element={<Home listData={ data } />} />
+//         <Route path="/about" element={<About />} />
+//         <Route path="/contact" element={<Contact />} />
+//         <Route path="/signup" element={<Signup handler={signup} />} />
+//         <Route path="/signout" element={<Signout handler={signoutuser} auth={auth} />} />
+//         <Route path="/signin" element={<Signin handler={signin} />} />
+//       </Routes>
+//       <Footer year="2022" />
+//     </div>
+//   );
+// }
+
+return (
+  <div className="App">
+    <Header title="BRAND" leftnav = {LeftNavData} rightnav = {RightNavData} />
+    <Routes>
+      <Route path="/" element={<Home listData={ data } />} />
+      {/* <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} /> */}
+      <Route path="/signup" element={<Signup handler={signup} />} />
+      <Route path="/signout" element={<Signout handler={signoutuser} auth={auth} />} />
+      <Route path="/signin" element={<Signin handler={signin} />} />
+        <Route path="/experiences" element={<Experiences />} />
+        <Route path="/deals" element={<Deals />} />
+        <Route path="/cinema" element={<Cinema />} />
+        <Route path="/cart" element={<Cart />} />
+    </Routes>
+    <Footer year="2022" />
+  </div>
+);
 }
 
 export default App;

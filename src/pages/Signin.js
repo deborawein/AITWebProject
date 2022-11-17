@@ -4,12 +4,12 @@ import { useNavigate, Link } from "react-router-dom"
 export function Signin(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [success,setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const navigate = useNavigate()
 
-  useEffect( () => {
-    if( success ) { navigate('/') }
+  useEffect(() => {
+    if (success) { navigate('/') }
   })
 
   const submitHandler = (event) => {
@@ -17,14 +17,14 @@ export function Signin(props) {
     // stop the form from refreshing the page
     event.preventDefault()
     // reset error message
-   
+
     // capture data from form
     const data = new FormData(event.target)
     props.handler(data.get("useremail"), data.get("userpw"))
-      .then(() => setSuccess(true) )
+      .then(() => setSuccess(true))
       .catch((error) => {
         //console.log(error)
-      
+
       })
   }
 
@@ -32,7 +32,11 @@ export function Signin(props) {
     <div className="container">
       <div className="row">
         <form className="col-md-4 offset-md-4" onSubmit={submitHandler} >
-          <h2 className='signin-title'>Sign in to your account</h2>
+          {/* Toggle button */}
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <h2 className="text-center">Sign in to your account</h2>
           <div className="mb-3">
             <label htmlFor="useremail">Email </label>
             <input
@@ -59,17 +63,17 @@ export function Signin(props) {
           <div className="d-grid">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-outline-danger"
             >
-             Sign in
+              Sign in
             </button>
-            
+
           </div>
         </form>
       </div>
       <div className="row">
         <div className="col text-center">
-          <Link className="btn btn-link" to="/signup">Create an account</Link>
+          <Link className="link-danger" to="/signup">Create an account</Link>
         </div>
       </div>
     </div>
